@@ -30,3 +30,4 @@ class StoreNewUser extends FormRequest
         ];
     }
 }
+
