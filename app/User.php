@@ -37,4 +37,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * Define the relationship to the authAccessToken table
+     */
+    public function AauthAccessToken(){
+        
+        return $this->hasMany('\App\OauthAccessToken');
+    }
 }

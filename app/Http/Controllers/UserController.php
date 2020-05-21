@@ -8,7 +8,7 @@ use App\Http\Requests\StoreNewUser;
 use App\Http\Requests\Login;
 use Illuminate\Support\Facades\Auth;
 
-class UserContoller extends Controller
+class UserController extends Controller
 {
     /**
      * Creates a new user
@@ -49,5 +49,19 @@ class UserContoller extends Controller
             'user' => Auth::user(),
             'access_tocken' => $accessTocken,
         ]);
+    }
+    /**
+     * Logs out user
+     */
+    public function logout() {
+        if (Auth::check()) {
+            Auth::user()->AauthAccessToken()->delete();
+         }
+    }
+    /**
+     * Test function for authenticated user
+     */
+    public function get() {
+        return User::all();
     }
 }

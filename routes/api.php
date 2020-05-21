@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('user/create', 'UserController@create');
+Route::post('user/login', 'UserController@login');
 
-Route::post('user/create', 'UserContoller@create');
-Route::post('user/login', 'UserContoller@login');
+Route::middleware('auth:api')->get('/user/get', 'UserController@get');
+Route::middleware('auth:api')->post('/user/logout','UserController@logout');
+
