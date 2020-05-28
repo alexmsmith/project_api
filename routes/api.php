@@ -29,3 +29,7 @@ Route::get('testing', function () {
     return 'hello there';
 });
 
+Route::get('xy', function () {
+    return 'hello rachel';
+});
+
