@@ -21,4 +21,7 @@ Route::prefix('user')->group(function () {
     Route::middleware('auth:api')->post('logout','UserController@logout');
 });
 
+Route::get('test', function () {
+    return 'hi guys';
+});
 
