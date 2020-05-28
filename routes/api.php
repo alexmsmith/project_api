@@ -25,3 +25,7 @@ Route::get('test', function () {
     return 'hi guys';
 });
 
+Route::get('testing', function () {
+    return 'hello there';
+});
+
