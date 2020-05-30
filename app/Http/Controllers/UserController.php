@@ -45,7 +45,7 @@ class UserController extends Controller
             ]);
         }
 
-        return Auth::user();
+        return Auth::user()->createToken('Token Name')->accessToken;
 
         $accessTocken = Auth::user()->createToken('Token Name')->accessToken;
 
