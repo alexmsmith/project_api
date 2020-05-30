@@ -37,6 +37,8 @@ class UserController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        return $credentials;
+
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'status' => 'error', 
