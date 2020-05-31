@@ -22,7 +22,9 @@ Route::prefix('user')->group(function () {
 });
 
 Route::get('test', function () {
-    return 'hi guys';
+    return response()->json([
+        'status' => 'success', 
+    ]);
 });
 
 Route::get('testing', function () {
