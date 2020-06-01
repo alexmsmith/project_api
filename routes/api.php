@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('user')->group(function () {
     Route::post('create', 'UserController@create');
     Route::post('login', 'UserController@login');
+
+    Route::get('get1', 'UserController@get');
     
     Route::middleware('auth:api')->get('get', 'UserController@get');
     Route::middleware('auth:api')->post('logout','UserController@logout');
