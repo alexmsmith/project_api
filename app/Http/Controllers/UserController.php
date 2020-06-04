@@ -30,6 +30,7 @@ class UserController extends Controller
             'status' => 'success', 
         ]);
     }
+
     /**
      * Logs the users in
      */
@@ -52,6 +53,7 @@ class UserController extends Controller
             'token' => $token,
         ]);
     }
+
     /**
      * Logs out user
      */
@@ -60,10 +62,22 @@ class UserController extends Controller
             Auth::user()->AauthAccessToken()->delete();
          }
     }
+
     /**
      * Test function for authenticated user
      */
     public function get() {
         return User::all();
+    }
+
+    /**
+     * Resets the users password
+     */
+    public function passwordReset(Request $request) {
+        $user = User::find(Auth::user()->id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return $user->password;
     }
 }

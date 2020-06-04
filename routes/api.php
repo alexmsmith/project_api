@@ -21,6 +21,7 @@ Route::prefix('user')->group(function () {
     
     Route::middleware('auth:api')->get('get', 'UserController@get');
     Route::middleware('auth:api')->post('logout','UserController@logout');
+    Route::middleware('auth:api')->post('password-reset','UserController@passwordReset');
 });
 
 Route::get('test', function () {
