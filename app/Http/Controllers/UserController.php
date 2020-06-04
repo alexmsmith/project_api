@@ -60,7 +60,14 @@ class UserController extends Controller
     public function logout() {
         if (Auth::check()) {
             Auth::user()->AauthAccessToken()->delete();
-         }
+            return response()->json([
+                'status' => 'Logged out', 
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'Logout unsuccessful', 
+            ]);
+        }
     }
 
     /**
