@@ -74,10 +74,26 @@ class UserController extends Controller
      * Resets the users password
      */
     public function passwordReset(Request $request) {
+        //return $request['password'];
+        if (!$request['password']) {
+            return response()->json([
+                'error' => 'No new password supplied', 
+            ]);
+        }
+
         $user = User::find(Auth::user()->id);
+        if (!$user) {
+            return response()->json([
+                'error' => 'User not found', 
+            ]);
+        }
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return $user->password;
+        if ($user) {
+            return response()->json([
+                'status' => 'Password Updated', 
+            ]);
+        }
     }
 }
