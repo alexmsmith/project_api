@@ -23,7 +23,9 @@ class ActivationEmail extends Mailable
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->url = 'http://localhost:8000/api/user/activation?val=' . $user->activation_token;
+        
+        $this->url = 'http://project-api.ddns.net/api/user/activation?val=' . $user->activation_token;
+        //$this->url = 'http://localhost:8000/api/user/activation?val=' . $user->activation_token;
     }
 
     /**
