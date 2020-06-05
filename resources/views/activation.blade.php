@@ -1,0 +1,1 @@
+Your account has now been activated thank you.

@@ -18,6 +18,8 @@ Route::prefix('user')->group(function () {
     Route::post('login', 'UserController@login');
 
     Route::get('get1', 'UserController@get');
+
+    Route::get('activation', 'UserController@activation');
     
     Route::middleware('auth:api')->get('get', 'UserController@get');
     Route::middleware('auth:api')->post('logout','UserController@logout');

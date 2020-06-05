@@ -7,6 +7,8 @@ use App\User;
 use App\Http\Requests\StoreNewUser;
 use App\Http\Requests\Login;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ActivationEmail;
 
 class UserController extends Controller
 {
@@ -19,6 +21,8 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->activation_token = $this->generateActivationtoken();
+        $user->activated = 0;
         $user->save();
         if (!$user) {
             return response()->json([
@@ -26,9 +30,25 @@ class UserController extends Controller
             ]);
         }
 
+        Mail::to($user->email)->send(new ActivationEmail($user));
+
         return response()->json([
             'status' => 'success', 
         ]);
+    }
+
+    public function activation (Request $request)
+    {
+        $activation_token = $request->val;
+        $user = User::where('activation_token', $activation_token)->first();
+
+        if ($user) {
+            $user->email_verified_at = time();
+            $user->activated = 1;
+            $user->save();
+        }
+
+        return view('activation');
     }
 
     /**
@@ -38,7 +58,14 @@ class UserController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        //return $credentials;
+        $email = $credentials['email'];
+        $user = User::where('email', $email)->first();
+
+        if (!$user->activated) {
+            return response()->json([
+                'status' => 'Account not activated', 
+            ]);
+        }
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
@@ -81,7 +108,6 @@ class UserController extends Controller
      * Resets the users password
      */
     public function passwordReset(Request $request) {
-        //return $request['password'];
         if (!$request['password']) {
             return response()->json([
                 'error' => 'No new password supplied', 
@@ -102,5 +128,16 @@ class UserController extends Controller
                 'status' => 'Password Updated', 
             ]);
         }
+    }
+
+    public function generateActivationtoken($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 }
