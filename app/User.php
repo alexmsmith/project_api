@@ -44,4 +44,12 @@ class User extends Authenticatable
         
         return $this->hasMany('\App\OauthAccessToken');
     }
+
+    /**
+     * Define the relationship to the profile table.
+     */
+    public function Profile(){
+        
+        return $this->hasOne('\App\Profile', 'user_id');
+    }
 }

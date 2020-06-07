@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Profile;
 use App\Http\Requests\StoreNewUser;
 use App\Http\Requests\Login;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,14 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success', 
         ]);
+    }
+
+    /**
+     * Get the user's profile
+     */
+    public function getProfile (Request $request) {
+        $user_id = $request->id;
+        return Profile::where('user_id', $user_id)->first();
     }
 
     public function activation (Request $request)

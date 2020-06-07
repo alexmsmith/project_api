@@ -26,6 +26,8 @@ Route::prefix('user')->group(function () {
     Route::middleware('auth:api')->post('password-reset','UserController@passwordReset');
 });
 
+Route::post('profile', 'UserController@getProfile');
+
 Route::get('test', function () {
     return response()->json([
         'status' => 'success', 
